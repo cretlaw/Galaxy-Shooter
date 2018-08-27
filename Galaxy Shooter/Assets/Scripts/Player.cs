@@ -5,7 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float speed = 5.0f;
+    private float _speed = 5.0f;
+
+    [SerializeField]
+    private GameObject _laserPrefab;
+    [SerializeField]
+    private float _fireRate = 0.25f;
+    public float canFire = 0.0f;
+
 
     // Use this for initialization
     void Start()
@@ -17,14 +24,31 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+
+        //Note: right mouse click on my computer seems a litte buggy
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButton(0))
+        {
+            Shoot();
+           
+        }
+    }
+
+    private void Shoot()
+    {
+        if (Time.time > canFire)
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1, 0), Quaternion.identity);
+            canFire = Time.time + _fireRate;
+        }
+
     }
 
     private void Movement()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
-        transform.Translate(Vector3.up * verticalInput * speed * Time.deltaTime);
+        transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
+        transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
 
         if (transform.position.y > 0)
         {
