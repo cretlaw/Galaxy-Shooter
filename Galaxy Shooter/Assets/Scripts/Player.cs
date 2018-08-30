@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    
+
     [SerializeField] private float _speed = 5.0f;
 
     [SerializeField] private GameObject _laserPrefab;
@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _trippleShotPrefab;
 
     [SerializeField] private float _fireRate = 0.25f;
+
+    private int _lifes = 3;
 
     public float canFire = 0.0f;
 
@@ -38,6 +40,8 @@ public class Player : MonoBehaviour
             Shoot();
 
         }
+
+
     }
 
     private void Shoot()
@@ -45,7 +49,7 @@ public class Player : MonoBehaviour
         if (Time.time > canFire)
         {
             canFire = Time.time + _fireRate;
-           
+
             if (isTrippleShot)
             {
 
@@ -67,7 +71,7 @@ public class Player : MonoBehaviour
 
         //Checks to see if HyperSpeed is enabled and adjusts speed
         _speed = (isHyperSpeedEnabled) ? 10.0f : 5.0f;
-         
+
 
         transform.Translate(Vector3.right * horizontalInput * _speed * Time.deltaTime);
         transform.Translate(Vector3.up * verticalInput * _speed * Time.deltaTime);
@@ -93,6 +97,15 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    public void Damage()
+    {
+        _lifes--;
+
+        if (_lifes < 1)
+            Destroy(this.gameObject);
+    }
+
     public void TriplePowerShotOn()
     {
         isTrippleShot = true;
@@ -109,12 +122,12 @@ public class Player : MonoBehaviour
     public IEnumerator TrippleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5.0f);
-        isTrippleShot = false; 
+        isTrippleShot = false;
     }
 
     public IEnumerator HyperSpeedPowerDownRoutine()
     {
-        yield return  new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(10.0f);
         isHyperSpeedEnabled = false;
     }
 }
