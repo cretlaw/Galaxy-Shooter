@@ -28,11 +28,16 @@ public class Player : MonoBehaviour
     public bool isHyperSpeedEnabled = false;
     public bool isShieldEnabled = false;
 
+    private UIManager _uiManager;
 
     // Use this for initialization
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
+        if(_uiManager != null)
+            _uiManager.UpdateLives(_lifes);
     }
 
     // Update is called once per frame
@@ -115,6 +120,8 @@ public class Player : MonoBehaviour
         }
 
         _lifes--;
+        _uiManager.UpdateLives(_lifes);
+
         if (_lifes < 1)
         {
             Instantiate(_ExplostionPrefab, transform.position, Quaternion.identity);
