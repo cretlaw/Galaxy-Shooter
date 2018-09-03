@@ -29,6 +29,8 @@ public class Player : MonoBehaviour
     public bool isShieldEnabled = false;
 
     private UIManager _uiManager;
+    private GameManager _gameManager;
+    private SpawnManager _spawnManager;
 
     // Use this for initialization
     void Start()
@@ -38,6 +40,12 @@ public class Player : MonoBehaviour
 
         if(_uiManager != null)
             _uiManager.UpdateLives(_lifes);
+
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+
+        if(_spawnManager != null)
+            _spawnManager.StartSpawnRoutine();
     }
 
     // Update is called once per frame
@@ -125,6 +133,12 @@ public class Player : MonoBehaviour
         if (_lifes < 1)
         {
             Instantiate(_ExplostionPrefab, transform.position, Quaternion.identity);
+            if (_gameManager != null)
+            {
+                _gameManager.gameOver = true;
+                _uiManager.ShowTitleScreen();
+            }
+            
             Destroy(this.gameObject);
         }
 

@@ -8,16 +8,29 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject _enemyPrefab;
 
     [SerializeField] private GameObject[] _powerups;
+    private GameManager _gameManager;
+
     // Use this for initialization
     void Start()
     {
-        StartCoroutine(SpawnEnemyRoutine());
-        StartCoroutine(SpawnPowerupsRoutine());
+        
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+      
+    }
+
+    public void StartSpawnRoutine()
+    {
+        if (_gameManager != null)
+        {
+            StartCoroutine(SpawnEnemyRoutine());
+            StartCoroutine(SpawnPowerupsRoutine());
+        }
     }
 
     IEnumerator SpawnEnemyRoutine()
     {
-        while (true)
+       
+        while (_gameManager.gameOver == false)
         {
             
            Instantiate(_enemyPrefab, new Vector3(Random.Range(-8.2f, 8.2f), 4.12f, 0), Quaternion.identity);
@@ -27,7 +40,7 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerupsRoutine()
     {
-        while (true)
+        while (_gameManager.gameOver == false)
         {
             int randomPowerup = Random.Range(0, 3);
             Instantiate(_powerups[randomPowerup], new Vector3(Random.Range(-8.2f, 8.2f), 4.12f, 0),
