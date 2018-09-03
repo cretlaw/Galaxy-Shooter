@@ -14,7 +14,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private float _fireRate = 0.25f;
 
-    private int _lifes = 3;
+    [SerializeField] private GameObject _ExplostionPrefab;
+
+    [SerializeField] private int _lifes = 3;
 
     public float canFire = 0.0f;
 
@@ -103,7 +105,11 @@ public class Player : MonoBehaviour
         _lifes--;
 
         if (_lifes < 1)
+        {
+            Instantiate(_ExplostionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
+        }
+            
     }
 
     public void TriplePowerShotOn()

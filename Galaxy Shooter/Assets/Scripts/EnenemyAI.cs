@@ -6,13 +6,12 @@ public class EnenemyAI : MonoBehaviour
 {
 
     [SerializeField] private float _speed = 3.0f;
-    // Use this for initialization
-    void Start()
-    {
 
-    }
+    [SerializeField] private GameObject _enemyExplosionPrefab;
 
-    // Update is called once per frame
+
+
+    // Update is called once per frame 
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -28,20 +27,20 @@ public class EnenemyAI : MonoBehaviour
     {
         if (other.tag == "Laser")
         {
-            if(other.transform.parent != null)
+            if (other.transform.parent != null)
                 Destroy(other.transform.parent.gameObject);
 
             Destroy(other.gameObject);
-            
+
         }
         else if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
 
-            if(player != null)
+            if (player != null)
                 player.Damage();
         }
-
+        Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
         Destroy(this.gameObject);
     }
 }
