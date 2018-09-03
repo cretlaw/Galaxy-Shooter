@@ -163,7 +163,7 @@ MonoBehaviour:
   _fireRate: 0.25
   _ExplostionPrefab: {fileID: 1345482412189730, guid: 8c1fdd421d149ec4896a98a20b987740,
     type: 2}
-  _lifes: 1
+  _lifes: 3
   canFire: 0
   isTrippleShot: 0
   isHyperSpeedEnabled: 0

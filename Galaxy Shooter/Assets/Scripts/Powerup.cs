@@ -26,7 +26,8 @@ public class Powerup : MonoBehaviour
                     player.TriplePowerShotOn();
                 else if (powerupId == 1)
                     player.HyperSpeedOn();
-
+                else if (powerupId == 2)
+                    player.ShieldOn();
             }
 
             //Destroy powerup

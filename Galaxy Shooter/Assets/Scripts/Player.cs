@@ -16,13 +16,17 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject _ExplostionPrefab;
 
+    [SerializeField] private GameObject _shieldGameObject;
+
     [SerializeField] private int _lifes = 3;
+
 
     public float canFire = 0.0f;
 
     public bool isTrippleShot = false;
 
     public bool isHyperSpeedEnabled = false;
+    public bool isShieldEnabled = false;
 
 
     // Use this for initialization
@@ -102,14 +106,22 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _lifes--;
+        if (isShieldEnabled)
+        {
+            isShieldEnabled = false;
+            _shieldGameObject.SetActive(false);
+            return;
 
+        }
+
+        _lifes--;
         if (_lifes < 1)
         {
             Instantiate(_ExplostionPrefab, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
-            
+
+
     }
 
     public void TriplePowerShotOn()
@@ -123,6 +135,12 @@ public class Player : MonoBehaviour
         isHyperSpeedEnabled = true;
         StartCoroutine(HyperSpeedPowerDownRoutine());
 
+    }
+
+    public void ShieldOn()
+    {
+        isShieldEnabled = true;
+        _shieldGameObject.SetActive(true);
     }
 
     public IEnumerator TrippleShotPowerDownRoutine()
