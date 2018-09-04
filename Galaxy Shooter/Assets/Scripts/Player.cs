@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] private int _lifes = 3;
 
+    [SerializeField] private GameObject[] _engines;
 
     public float canFire = 0.0f;
 
@@ -49,6 +50,7 @@ public class Player : MonoBehaviour
             _spawnManager.StartSpawnRoutine();
 
         _audioSource = GetComponent<AudioSource>();
+       
     }
 
     // Update is called once per frame
@@ -130,8 +132,17 @@ public class Player : MonoBehaviour
             return;
 
         }
+         
 
         _lifes--;
+        if (_lifes == 2)
+        {
+            _engines[0].SetActive(true);
+        }
+        else if(_lifes == 1)
+        {
+            _engines[1].SetActive(true);
+        }
         _uiManager.UpdateLives(_lifes);
 
         if (_lifes < 1)
