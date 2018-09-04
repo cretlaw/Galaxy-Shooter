@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     private GameManager _gameManager;
     private SpawnManager _spawnManager;
+    private AudioSource _audioSource;
 
     // Use this for initialization
     void Start()
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour
 
         if(_spawnManager != null)
             _spawnManager.StartSpawnRoutine();
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -67,6 +70,7 @@ public class Player : MonoBehaviour
     {
         if (Time.time > canFire)
         {
+            _audioSource.Play();
             canFire = Time.time + _fireRate;
 
             if (isTrippleShot)

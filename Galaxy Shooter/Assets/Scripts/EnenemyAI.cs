@@ -10,11 +10,12 @@ public class EnenemyAI : MonoBehaviour
     [SerializeField] private GameObject _enemyExplosionPrefab;
 
     private UIManager _uiManager;
+    [SerializeField] AudioClip clip;
 
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
-
+        
     }
 
     // Update is called once per frame 
@@ -46,7 +47,8 @@ public class EnenemyAI : MonoBehaviour
             if (player != null)
                 player.Damage();
         }
-
+       
+        AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position, 1f);
         Instantiate(_enemyExplosionPrefab, transform.position, Quaternion.identity);
 
         if (_uiManager != null)
