@@ -72,7 +72,11 @@ public class Player : MonoBehaviour
     {
         if (Time.time > canFire)
         {
-            _audioSource.Play();
+            if (_audioSource != null)
+            {
+                _audioSource.Play();
+            }
+            
             canFire = Time.time + _fireRate;
 
             if (isTrippleShot)
